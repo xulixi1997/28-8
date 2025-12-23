@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郑州码禄网络科技有限公司 | 专业电商运营服务商</title>
+    <meta name="description" content="郑州码禄网络科技有限公司，专注电商平台运营、数据分析与品牌孵化。位于中国，致力为企业提供一站式电商解决方案。">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* --- 全局变量与重置 --- */
+        :root {
+            --primary: #0F172A; /* 深午夜蓝 */
+            --secondary: #F59E0B; /* 琥珀橙 */
+            --accent: #3B82F6; /* 科技蓝 */
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; object-fit: cover; }
+
+        /* --- 动画类 --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 通用组件 --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-padding { padding: 80px 0; }
+        .bg-light { background-color: var(--light-bg); }
+        .bg-dark { background-color: var(--primary); color: var(--white); }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+        .bg-dark .section-title h2 { color: var(--white); }
+        .section-title p {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .section-title .line {
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* --- 1. Header 导航 --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo i { color: var(--secondary); }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--secondary); }
+        .header-cta { display: flex; gap: 16px; align-items: center; }
+
+        /* --- 2. Hero 区域 --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)), url('https://picsum.photos/id/3/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            position: relative;
+        }
+        .hero-content { max-width: 800px; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 24px; font-weight: 800; }
+        .hero p { font-size: 1.25rem; opacity: 0.9; margin-bottom: 40px; }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 30px;
+        }
+        .stat-item strong { display: block; font-size: 2rem; color: var(--secondary); }
+        .stat-item span { font-size: 0.9rem; opacity: 0.8; }
+
+        /* --- 3. 核心优势条 (Ticker) --- */
+        .features-bar {
+            background: var(--white);
+            transform: translateY(-50%);
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .fb-item { text-align: center; }
+        .fb-item i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
+        .fb-item h4 { font-weight: 700; margin-bottom: 5px; }
+
+        /* --- 4. 关于我们 --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-img {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .about-img img { width: 100%; border-radius: 20px; transition: transform 0.5s; }
+        .about-img:hover img { transform: scale(1.05); }
+        .about-badge {
+            position: absolute;
+            bottom: 30px;
+            right: -20px;
+            background: var(--secondary);
+            padding: 20px;
+            color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- 5. 核心业务 --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--secondary);
+        }
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        .service-card:hover .service-icon { background: var(--secondary); color: var(--white); }
+
+        /* --- 6. 数据可视化展示 --- */
+        .data-section {
+            background: var(--primary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .data-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .data-visual {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* --- 7. 直播电商特写 --- */
+        .live-commerce {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 0;
+            border-radius: 30px;
+            overflow: hidden;
+            background: #fff0e6; /* 浅橙色背景 */
+        }
+        .live-text { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .live-img { height: 100%; min-height: 400px; }
+        .live-img img { height: 100%; width: 100%; object-fit: cover; }
+
+        /* --- 8. 我们的流程 --- */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+        .step-item {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            background: var(--light-bg);
+            padding: 0 10px;
+            flex: 1;
+        }
+        .step-num {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            line-height: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* --- 9. 客户案例 --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .portfolio-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 300px;
+            group: group;
+        }
+        .portfolio-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+        }
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+        /* --- 10. 团队介绍 --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .team-member { text-align: center; }
+        .team-avatar {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        /* --- 11. 合作平台 (Logo墙) --- */
+        .partners-wrap {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
+            opacity: 0.6;
+        }
+        .partner-logo { font-size: 2rem; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+
+        /* --- 12. 评价 --- */
+        .testimonial-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            font-style: italic;
+        }
+
+        /* --- 13. FAQ --- */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .faq-item h4 { margin-bottom: 10px; color: var(--primary); }
+
+        /* --- 14. 招聘与文化 --- */
+        .culture-section {
+            background: url('https://picsum.photos/id/60/1920/600') fixed;
+            background-size: cover;
+            position: relative;
+            color: var(--white);
+            text-align: center;
+        }
+        .culture-overlay {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 100px 0;
+        }
+
+        /* --- 15. 联系我们 --- */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 0;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .contact-info-box {
+            background: var(--primary);
+            color: var(--white);
+            padding: 60px 40px;
+        }
+        .contact-detail {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .contact-detail i { color: var(--secondary); margin-top: 5px; }
+        .map-box { height: 100%; min-height: 400px; background: #eee; position: relative;}
+        .map-placeholder {
+            width: 100%; height: 100%;
+            background-image: url('https://picsum.photos/id/238/800/600'); /* 模拟地图 */
+            background-size: cover;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #020617;
+            color: #94a3b8;
+            padding: 80px 0 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .footer-brand h3 { color: var(--white); margin-bottom: 20px; }
+        .footer-links h4 { color: var(--white); margin-bottom: 20px; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a:hover { color: var(--secondary); }
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* --- 响应式 --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .features-bar, .about-grid, .data-content, .live-commerce, .contact-wrapper, .footer-grid, .portfolio-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-bar { transform: none; margin: 20px 0; }
+            .nav-links { display: none; } /* 移动端简化 */
+            .process-steps { flex-direction: column; gap: 30px; }
+            .process-steps::before { width: 2px; height: 100%; left: 25px; top: 0; }
+            .step-item { text-align: left; padding-left: 70px; }
+            .step-num { position: absolute; left: 0; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <i class="fas fa-layer-group"></i> 码禄科技 MALU TECH
+            </a>
+            <nav class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#about">关于我们</a>
+                <a href="#services">核心业务</a>
+                <a href="#process">服务流程</a>
+                <a href="#portfolio">成功案例</a>
+                <a href="#contact">联系我们</a>
+            </nav>
+            <div class="header-cta">
+                <span style="font-weight:bold; color:var(--primary)">17076853246</span>
+                <a href="#contact" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">免费诊断</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content reveal">
+                <h1>深耕中国，<br>服务全国电商生态</h1>
+                <p>我们致力于通过数据驱动和精细化运营，帮助品牌在淘宝、京东、抖音等平台实现指数级增长。您身边的全渠道电商运营专家。</p>
+                <a href="#contact" class="btn btn-primary">开启增长之旅 <i class="fas fa-arrow-right"></i></a>
+                <a href="#services" class="btn btn-outline" style="border-color:white; color:white; margin-left: 15px;">了解服务</a>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <strong>8+</strong>
+                        <span>年行业经验</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>500+</strong>
+                        <span>服务品牌</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>1.2亿</strong>
+                        <span>累计GMV增长</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="features-bar reveal">
+            <div class="fb-item">
+                <i class="fas fa-chart-line"></i>
+                <h4>ROI 提升</h4>
+                <p>平均投产比提升 45%</p>
+            </div>
+            <div class="fb-item">
+                <i class="fas fa-users-cog"></i>
+                <h4>专业团队</h4>
+                <p>超50人运营专家</p>
+            </div>
+            <div class="fb-item">
+                <i class="fas fa-stopwatch"></i>
+                <h4>快速响应</h4>
+                <p>7x12小时在线支持</p>
+            </div>
+            <div class="fb-item">
+                <i class="fas fa-shield-alt"></i>
+                <h4>风险管控</h4>
+                <p>规避平台违规风险</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <h5 style="color:var(--secondary); font-weight:700; margin-bottom:10px;">ABOUT US</h5>
+                    <h2 style="font-size:2.5rem; margin-bottom:20px; color:var(--primary);">郑州码禄网络科技有限公司</h2>
+                    <p style="margin-bottom:20px; color:var(--text-gray);">
+                        作为中国领先的电商服务机构，郑州码禄网络科技有限公司不仅仅是您的代运营服务商，更是您的生意合伙人。我们立足于中国，辐射全国，专注于将优质产品通过互联网销往各地。
+                    </p>
+                    <p style="margin-bottom:30px; color:var(--text-gray);">
+                        我们的团队由资深店长、数据分析师、视觉设计师和直播操盘手组成，拥有从0到1孵化品牌，以及从1到100引爆销量的丰富实战经验。
+                    </p>
+                    <ul style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:30px;">
+                        <li><i class="fas fa-check-circle" style="color:var(--secondary)"></i> 本地化贴身服务</li>
+                        <li><i class="fas fa-check-circle" style="color:var(--secondary)"></i> 全链路资源整合</li>
+                        <li><i class="fas fa-check-circle" style="color:var(--secondary)"></i> 效果付费模式</li>
+                        <li><i class="fas fa-check-circle" style="color:var(--secondary)"></i> 品牌资产沉淀</li>
+                    </ul>
+                </div>
+                <div class="about-img reveal">
+                    <img src="https://picsum.photos/id/1/600/500" alt="公司办公环境">
+                    <div class="about-badge">
+                        <span style="font-size:1.5rem; font-weight:800;">Top 10</span><br>中国电商优秀企业
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>全案电商解决方案</h2>
+                <p>覆盖主流电商平台，提供一站式托管服务</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="services-grid reveal">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-store"></i></div>
+                    <h3>店铺代运营</h3>
+                    <p style="color:var(--text-gray); margin-top:10px;">淘宝/天猫/京东/拼多多全平台店铺托管，包括选品测款、SEO优化、活动申报及日常维护。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-video"></i></div>
+                    <h3>直播带货运营</h3>
+                    <p style="color:var(--text-gray); margin-top:10px;">抖音/快手直播间搭建、主播孵化、脚本策划、流量投放，打造高转化的直播场景。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>视觉设计与拍摄</h3>
+                    <p style="color:var(--text-gray); margin-top:10px;">主图视频拍摄、详情页设计、品牌VI升级。用视觉讲好品牌故事，提升点击率与转化率。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-search-dollar"></i></div>
+                    <h3>精准付费推广</h3>
+                    <p style="color:var(--text-gray); margin-top:10px;">直通车、引力魔方、千川投放专家。精细化人群标签，每一分钱都花在刀刃上。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>金牌客服外包</h3>
+                    <p style="color:var(--text-gray); margin-top:10px;">专业客服团队，7x15小时在线，提升响应速度，提高询单转化，降低售后纠纷。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-truck-loading"></i></div>
+                    <h3>供应链管理咨询</h3>
+                    <p style="color:var(--text-gray); margin-top:10px;">协助梳理库存管理、发货流程优化，对接优质物流资源，降低履约成本。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="live-commerce reveal">
+                <div class="live-text">
+                    <h3 style="color:var(--secondary); text-transform:uppercase; letter-spacing:2px; font-size:0.9rem;">New Retail</h3>
+                    <h2 style="font-size:2.2rem; margin:15px 0 20px; color:var(--primary);">兴趣电商与直播突围</h2>
+                    <p style="color:var(--text-gray); margin-bottom:30px;">
+                        在流量碎片化时代，我们帮助传统企业转型兴趣电商。通过短视频种草+直播拔草的闭环模式，实现销量的爆发式增长。我们拥有自建直播基地，配套专业灯光设备。
+                    </p>
+                    <div style="display:flex; gap:30px;">
+                        <div>
+                            <h4 style="font-size:1.5rem; color:var(--primary); font-weight:800;">50+</h4>
+                            <p style="font-size:0.9rem;">签约主播</p>
+                        </div>
+                        <div>
+                            <h4 style="font-size:1.5rem; color:var(--primary); font-weight:800;">1000h+</h4>
+                            <p style="font-size:0.9rem;">月直播时长</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="btn btn-primary" style="margin-top:40px; width:fit-content;">预约探店考察</a>
+                </div>
+                <div class="live-img">
+                    <img src="https://picsum.photos/id/250/800/800" alt="直播设备与场景">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding data-section">
+        <div class="container">
+            <div class="data-content reveal">
+                <div>
+                    <h2 style="font-size:2.5rem; margin-bottom:20px;">数据不说谎，<br>决策更精准</h2>
+                    <p style="opacity:0.8; margin-bottom:30px; font-size:1.1rem;">
+                        我们不靠直觉做运营，而是依托生意参谋、数据银行、巨量云图等专业工具，进行全方位市场洞察。
+                    </p>
+                    <ul style="line-height:2.5;">
+                        <li><i class="fas fa-chart-pie" style="margin-right:10px; color:var(--secondary);"></i> 竞品数据监控与分析</li>
+                        <li><i class="fas fa-chart-area" style="margin-right:10px; color:var(--secondary);"></i> 人群画像精准定位</li>
+                        <li><i class="fas fa-chart-bar" style="margin-right:10px; color:var(--secondary);"></i> 全链路转化漏斗优化</li>
+                    </ul>
+                </div>
+                <div class="data-visual">
+                    <img src="https://picsum.photos/id/0/600/400" style="border-radius:10px; width:100%; opacity:0.9;" alt="数据分析报表">
+                    <div style="margin-top:20px; display:flex; justify-content:space-between; font-family:monospace;">
+                        <span>Traffic: <span style="color:#4ade80">▲ 24%</span></span>
+                        <span>Conv. Rate: <span style="color:#4ade80">▲ 3.5%</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>标准化服务流程</h2>
+                <p>透明化合作，每一步都清晰可见</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="process-steps reveal">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <h3>店铺诊断</h3>
+                    <p style="font-size:0.9rem; color:var(--text-gray); margin-top:10px;">分析店铺现状，找出核心痛点与增长机会。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <h3>策略定制</h3>
+                    <p style="font-size:0.9rem; color:var(--text-gray); margin-top:10px;">制定阶段性运营规划、选品策略及推广预算。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <h3>执行落地</h3>
+                    <p style="font-size:0.9rem; color:var(--text-gray); margin-top:10px;">视觉升级、产品上架、推广投放、活动报名。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <h3>复盘优化</h3>
+                    <p style="font-size:0.9rem; color:var(--text-gray); margin-top:10px;">周/月度数据复盘，根据反馈调整策略，持续增长。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section-padding">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>精选成功案例</h2>
+                <p>我们用结果说话，见证每一个品牌的崛起</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="portfolio-grid reveal">
+                <div class="portfolio-item">
+                    <img src="https://picsum.photos/id/20/400/300" alt="文具类目案例">
+                    <div class="portfolio-overlay">
+                        <h3>某文具品牌旗舰店</h3>
+                        <p>月销从5万突破300万</p>
+                        <span style="margin-top:10px; font-size:0.8rem; border:1px solid white; padding:5px 10px; border-radius:20px;">天猫运营</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://picsum.photos/id/102/400/300" alt="农特产案例">
+                    <div class="portfolio-overlay">
+                        <h3>中国特产专营店</h3>
+                        <p>打造爆款陈醋/红枣</p>
+                        <span style="margin-top:10px; font-size:0.8rem; border:1px solid white; padding:5px 10px; border-radius:20px;">京东运营</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://picsum.photos/id/175/400/300" alt="美妆案例">
+                    <div class="portfolio-overlay">
+                        <h3>国货美妆品牌</h3>
+                        <p>抖音直播单场GMV破百万</p>
+                        <span style="margin-top:10px; font-size:0.8rem; border:1px solid white; padding:5px 10px; border-radius:20px;">直播带货</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://picsum.photos/id/366/400/300" alt="家居案例">
+                    <div class="portfolio-overlay">
+                        <h3>创意家居生活馆</h3>
+                        <p>全店视觉升级与转化率提升</p>
+                        <span style="margin-top:10px; font-size:0.8rem; border:1px solid white; padding:5px 10px; border-radius:20px;">视觉设计</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://picsum.photos/id/445/400/300" alt="数码3C">
+                    <div class="portfolio-overlay">
+                        <h3>3C数码配件</h3>
+                        <p>直通车ROI提升至1:8</p>
+                        <span style="margin-top:10px; font-size:0.8rem; border:1px solid white; padding:5px 10px; border-radius:20px;">付费推广</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://picsum.photos/id/119/400/300" alt="服装案例">
+                    <div class="portfolio-overlay">
+                        <h3>男装原创品牌</h3>
+                        <p>从0到1孵化，半年升层级</p>
+                        <span style="margin-top:10px; font-size:0.8rem; border:1px solid white; padding:5px 10px; border-radius:20px;">品牌孵化</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align:center; margin-top:40px;">
+                <a href="#" class="btn btn-outline">查看更多案例</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-light">
+        <div class="container">
+            <p style="text-align:center; color:var(--text-gray); margin-bottom:30px; letter-spacing:1px;">PLATFORM PARTNERS</p>
+            <div class="partners-wrap reveal">
+                <div class="partner-logo"><i class="fab fa-alibaba" style="color:#FF5000"></i> Taobao</div>
+                <div class="partner-logo"><i class="fas fa-shopping-bag" style="color:#F10215"></i> JD.com</div>
+                <div class="partner-logo"><i class="fab fa-tiktok" style="color:#000000"></i> Douyin</div>
+                <div class="partner-logo"><i class="fab fa-weixin" style="color:#07C160"></i> WeChat</div>
+                <div class="partner-logo"><i class="fas fa-bolt" style="color:#E02E24"></i> Pinduoduo</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>核心操盘团队</h2>
+                <p>平均拥有5年以上一线实战经验</p>
+                <div class="line"></div>
+            </div>
+            <div class="team-grid reveal">
+                <div class="team-member">
+                    <div class="team-avatar"><img src="https://picsum.photos/id/1005/200/200" alt="CEO"></div>
+                    <h4>张总</h4>
+                    <p style="color:var(--text-gray); font-size:0.9rem;">创始人 / 10年电商老兵</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar"><img src="https://picsum.photos/id/1011/200/200" alt="Director"></div>
+                    <h4>李总监</h4>
+                    <p style="color:var(--text-gray); font-size:0.9rem;">运营总监 / 爆款制造机</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar"><img src="https://picsum.photos/id/1027/200/200" alt="Manager"></div>
+                    <h4>王经理</h4>
+                    <p style="color:var(--text-gray); font-size:0.9rem;">推广专家 / 流量捕手</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar"><img src="https://picsum.photos/id/338/200/200" alt="Designer"></div>
+                    <h4>赵设计</h4>
+                    <p style="color:var(--text-gray); font-size:0.9rem;">视觉总监 / 创意美学</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>客户之声</h2>
+            </div>
+            <div class="services-grid reveal">
+                <div class="testimonial-card">
+                    <p>“郑州码禄网络科技有限公司非常专业，接手我们店铺3个月，流量翻了两番。尤其是他们对数据的敏感度，帮我们避开了好多弯路。”</p>
+                    <div style="margin-top:20px; font-weight:bold; font-style:normal;">— 中国某食品企业负责人</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>“服务态度很好，响应及时。不仅帮我们做运营，还指导我们怎么优化产品包装，真正的良心合作伙伴。”</p>
+                    <div style="margin-top:20px; font-weight:bold; font-style:normal;">— 中国特产商家</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>“做抖音直播还是得找专业的团队，自己摸索太慢了。我们的场控和主播配合很默契，推荐！”</p>
+                    <div style="margin-top:20px; font-weight:bold; font-style:normal;">— 某服装品牌主理人</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>常见问题解答</h2>
+            </div>
+            <div class="faq-grid reveal">
+                <div class="faq-item">
+                    <h4>Q: 你们主要做哪些平台？</h4>
+                    <p style="color:var(--text-gray)">A: 我们目前主要覆盖天猫、淘宝、京东、拼多多、抖音、快手以及微信私域流量运营。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 收费模式是怎样的？</h4>
+                    <p style="color:var(--text-gray)">A: 我们通常采用“基础服务费 + 销售提点”的模式，利益绑定，共担风险，共享收益。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 0基础的新店可以做吗？</h4>
+                    <p style="color:var(--text-gray)">A: 可以的。我们有专门针对新店的“破壳计划”，涵盖从入驻认证到第一单成交的全流程。</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Q: 合作多久能看到效果？</h4>
+                    <p style="color:var(--text-gray)">A: 一般店铺经过基础优化后，次月流量会有明显提升。爆款打造周期通常在1-3个月不等。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="culture-section">
+        <div class="culture-overlay">
+            <div class="container reveal">
+                <h2>加入我们，共创未来</h2>
+                <p style="margin:20px 0 40px; font-size:1.1rem;">我们正在寻找有激情、有想法的电商人才。如果你热爱互联网，欢迎加入我们！</p>
+                <a href="#contact" class="btn btn-outline" style="color:white; border-color:white;">查看招聘岗位</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>联系我们</h2>
+                <p>期待与您深入沟通，为您量身定制电商方案</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="contact-wrapper reveal">
+                <div class="contact-info-box">
+                    <h3 style="font-size:1.8rem; margin-bottom:30px;">Let's Talk</h3>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                        <div>
+                            <h5 style="margin-bottom:5px;">公司地址</h5>
+                            <p style="opacity:0.8;">河南省郑州市惠济区刘寨街道升龙汇金写字楼707室</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-phone-alt fa-lg"></i>
+                        <div>
+                            <h5 style="margin-bottom:5px;">咨询热线</h5>
+                            <p style="opacity:0.8; font-size:1.2rem; font-weight:bold;">17076853246</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope fa-lg"></i>
+                        <div>
+                            <h5 style="margin-bottom:5px;">电子邮箱</h5>
+                            <p style="opacity:0.8;">contact@zhengzhoumalu.icu</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:50px;">
+                        <p style="margin-bottom:15px;">关注我们：</p>
+                        <div style="display:flex; gap:15px;">
+                            <a href="#" style="font-size:1.5rem;"><i class="fab fa-weixin"></i></a>
+                            <a href="#" style="font-size:1.5rem;"><i class="fab fa-weibo"></i></a>
+                            <a href="#" style="font-size:1.5rem;"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="map-box">
+                    <div class="map-placeholder">
+                        <div style="background:rgba(255,255,255,0.9); padding:20px; border-radius:10px; text-align:center;">
+                            <i class="fas fa-map-marked-alt" style="font-size:3rem; color:var(--primary);"></i>
+                            <p style="margin-top:10px; font-weight:bold; color:var(--primary);">郑州码禄网络科技有限公司</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>郑州码禄网络科技有限公司</h3>
+                    <p style="font-size:0.9rem; line-height:1.8; margin-bottom:20px;">
+                        专注为企业提供品牌电商全案运营服务。从策略到执行，从数据到创意，我们致力于成为您值得信赖的商业伙伴。
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>服务项目</h4>
+                    <ul>
+                        <li><a href="#">店铺代运营</a></li>
+                        <li><a href="#">直播带货</a></li>
+                        <li><a href="#">视觉设计</a></li>
+                        <li><a href="#">数据分析</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>关于公司</h4>
+                    <ul>
+                        <li><a href="#">公司简介</a></li>
+                        <li><a href="#">团队风采</a></li>
+                        <li><a href="#">成功案例</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li>17076853246</li>
+                        <li>contact@zhengzhoumalu.icu</li>
+                        <li>河南省郑州市惠济区刘寨街道升龙汇金写字楼707室</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 郑州码禄网络科技有限公司 All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的 Scroll Reveal 动画逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            // 初始化触发一次
+            revealOnScroll();
+        });
+
+        // 导航栏平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
